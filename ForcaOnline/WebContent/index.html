@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+<title>Forca UP</title>
+
+<script src="/ForcaOnline/Scripts/jquery-1.5.1.js"></script>
+
+<script language="javascript">
+       $(function () {
+            $("#envia").click(function () {
+ 
+               $.ajax({
+                   type: 'POST',
+                   url: 'JogarForca',
+                   data: '{ "letra" : "' + letra.value + '" }',
+                   contentType: 'application/json; charset=utf-8',
+                   dataType: 'json',
+                   success: function (msg) {
+                	 	//alert(msg.message);
+                	   $("#desenho").html(msg.message);
+                	   letra.value = "";
+                   }
+               });
+ 
+           });
+ 
+       });
+
+       $(function () {
+           $("#inicia").click(function () {
+
+              $.ajax({
+                  type: 'POST',
+                  url: 'IniciarForca',
+                  dataType: 'json',
+                  success: function (msg) {
+               	 	//alert(msg.message);
+               	     $("#dica").html(msg.message);
+               	 	 $("#letra").removeAttr("disabled");
+               		 $("#envia").removeAttr("disabled");  
+               		 $("#inicia").attr("disabled", "disabled");
+                  }
+              });
+
+          });
+
+      });
+
+   </script>
+
+</head>
+
+<body>
+	<div id="desenho"></div>
+	<div id="dica"></div>
+	<input type="text" id="letra" disabled="disabled">
+
+	<input type=button value="Enviar" id="envia" disabled="disabled" />
+
+	<input type=button value="iniciar" id="inicia" />
+
+</body>
+</html>

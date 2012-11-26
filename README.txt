@@ -1,0 +1,1 @@
+Estudo sobre um jogo de forca. 
