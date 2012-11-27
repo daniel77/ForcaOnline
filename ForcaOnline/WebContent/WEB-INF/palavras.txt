@@ -1,0 +1,23 @@
+teclado!Peca de computador
+bola!elemento de muitos jogos
+carro!inventado por henny ford
+trilho!sem eles nao haveria trem
+dinheiro!algo comum no mundo atual
+trono!cadeira dos reis
+sorvete!doce gelado
+nevoeiro!nevoa densa
+everest!pico mais alto do mundo
+limao!fruta citrica
+relogio!aparelho para ver horas
+caderno!aonde vc escreve 
+carteira!aonde guarda o dinheiro
+tomcat!servidor java 
+botafogo!um dos times mais tradicionais do mundo 
+garrincha!dizem que foi melhor que peleh
+judo!nobre arte japonesa
+banho!quando voce esta sujo 
+ventilador!quando esta calor vc o liga
+google!mecanismo de busca na web
+iphone!melhor smartphone do mercado
+eclipse!famosa ide java
+facebook!a maior rede social 

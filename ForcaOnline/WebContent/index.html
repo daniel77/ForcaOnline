@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+<title>Forca Online =)</title>
+
+<link href="./images/favicon.ico" rel="icon" type="image/x-icon" />
+
+<meta name="description" content="Implementação do jogo de forca em HTML5,CSS3 E JAVA. ">
+
+<script src="./Scripts/jquery-1.5.1.js"></script>
+<script src="./Scripts/forcaOnline.js"></script>
+
+<script type="text/javascript" src="./Scripts/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+<script type="text/javascript" src="./Scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+
+<link rel="stylesheet" type="text/css" href="./Scripts/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="./css/forcaOnline.css" media="screen" />
+<script>
+	$(function() {
+		startForcaOnline();
+	});
+</script>
+</head>
+
+<body>
+	<canvas id="forca"></canvas>
+	<div id="desenho"></div>
+	<div id="dica"></div>
+	<input type="text" id="letra" disabled="disabled" maxlength="1">
+	<input type=button value="Enviar" id="envia" disabled="disabled" />
+	<input type=button value="iniciar" id="inicia" class="css3button" />
+	<input type=button value="Novo jogo" id="newGame"
+		onclick="document.location.reload();" />
+	<br>
+	<a id="novaPalavra" href="novaPalavra.html">Cadastrar Nova Palavra</a>
+	<br>
+	<br>
+	Os arquivos fontes estão disponiveis em https://github.com/daniel77/ForcaOnline <br>
+	Desenvolvido por Daniel Gorski dnlgorski@gmail.com <br>
+	The license includes this restriction: "The software shall be used for good,
+not evil." If your conscience cannot live with that, then choose a different
+app.
+</body>
+</html>
