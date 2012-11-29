@@ -1,50 +1,63 @@
 package br.edu.up.controller;
 
+import static br.edu.up.util.Util.getStringFromJasonObj;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import br.edu.up.business.Forca;
+import br.edu.up.controller.base.BaseControllerServelet;
+import br.edu.up.util.ForcaException;
 
-public class JogarForca extends HttpServlet {
+/**
+ * Controlador reponsavel pelas enviar as jogadas para a implemtação da forca.
+ * 
+ * @author Daniel Gorski
+ * 
+ */
+public class JogarForca extends BaseControllerServelet
+{
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	    StringBuilder sb = new StringBuilder();
-	    BufferedReader br = request.getReader();
-	    String str;
-	    while( (str = br.readLine()) != null ){
-	        sb.append(str);
-	    };
-		
-	    String content = sb.toString().replace("\"","");
-	    content = content.replace("{","");
-	    content = content.replace(" }","");
-	    content = content.replace(" letra : ","");
-	    
-	    Forca jogo = (Forca)request.getSession().getAttribute("forca");
-	    
-	    String result = jogo.tentarletra(content);
-	    
+	protected void efetuarAcao()throws ForcaException
+	{
 
-	    if(jogo.isPerdeu())
-	    {
-	    	 response.getWriter().print("{ \"message\" : \" PERDEU: A PALAVRA ERA : "+ jogo.revelarPalavra(true) +"\", \"result\" : \""+result +"\" } ");
-	    	 return;
-	    }
-	    
-	    if(jogo.isVenceu())
-	    {
-	    	response.getWriter().print("{ \"message\" : \" VENCEU: A PALAVRA ERA : "+ jogo.revelarPalavra(true) +"\" } ");
-	    	return;
-	    }
-	    
-	    response.getWriter().print("{ \"message\" : \""+ jogo.revelarPalavra(false) +"\", \"result\" : \""+result +"\" } ");
+		try
+		{
+			StringBuilder sb = new StringBuilder();
+			BufferedReader br = getRequest().getReader();
+			String str;
+
+			while ((str = br.readLine()) != null)
+			{
+				sb.append(str);
+			}
+			;
+
+			String content = getStringFromJasonObj(sb.toString(), "letra");
+
+			Forca jogo = (Forca) getRequest().getSession().getAttribute("forca");
+
+			String result = jogo.tentarletra(content);
+
+			if (jogo.isPerdeu())
+			{
+				getResponse().getWriter().print("{ \"message\" : \" PERDEU: A PALAVRA ERA : " + jogo.revelarPalavra(true) + "\", \"result\" : \"" + result + "\" } ");
+				return;
+			}
+
+			if (jogo.isVenceu())
+			{
+				getResponse().getWriter().print("{ \"message\" : \" VENCEU: A PALAVRA ERA : " + jogo.revelarPalavra(true) + "\" } ");
+				return;
+			}
+
+			getResponse().getWriter().print("{ \"message\" : \"" + jogo.revelarPalavra(false) + "\", \"result\" : \"" + result + "\" } ");
+
+		} catch (IOException e)
+		{
+			throw new ForcaException(e.getMessage(), JogarForca.class);
+		}
 	}
 
 }

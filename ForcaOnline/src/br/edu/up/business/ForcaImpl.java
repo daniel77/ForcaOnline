@@ -6,6 +6,11 @@ import java.io.FileReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Daniel Gorski
+ *
+ */
 public class ForcaImpl implements Serializable, Forca {
 
 	private static final long serialVersionUID = 7653430318396138287L;

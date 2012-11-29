@@ -1,30 +1,39 @@
 package br.edu.up.controller;
 
+import static br.edu.up.util.Util.getStringFromJasonObj;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import br.edu.up.controller.base.BaseControllerServelet;
+import br.edu.up.util.ForcaException;
 
-public class CadastrarPalavra extends HttpServlet {
+/**
+ * Controlador para cadastro de palavra
+ * 
+ * @author Daniel Gorski 
+ * 
+ */
+public class CadastrarPalavra extends BaseControllerServelet
+{
 
 	private static final long serialVersionUID = 2003858803921255456L;
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void efetuarAcao() throws ForcaException
+	{
 		BufferedWriter arquivo;
 		String valores = "";
-		try {
+		try
+		{
 
 			StringBuilder sb = new StringBuilder();
-			BufferedReader br = request.getReader();
+			BufferedReader br = getRequest().getReader();
 			String str;
-			while ((str = br.readLine()) != null) {
+			while ((str = br.readLine()) != null)
+			{
 				sb.append(str);
 			};
 
@@ -32,35 +41,27 @@ public class CadastrarPalavra extends HttpServlet {
 
 			String[] palavrasDicas = valores.split(",");
 
-			String palavra = palavrasDicas[0].toString().replace("\"", "");
-			palavra = palavra.replace("{", "");
-			palavra = palavra.replace(" }", "");
-			palavra = palavra.replace(" palavra : ", "").trim();
+			String palavra = getStringFromJasonObj(palavrasDicas[0], "palavra");
 
-			if("".equals(palavra) || palavra == null)
+			if ("".equals(palavra) || palavra == null)
 			{
-				response.getWriter().print("{ \"message\" : \" erro: a palavra nao pode ser em branco \" } ");
-				return;
-			}
-			
-			String dica = palavrasDicas[1].toString().replace("\"", "");
-			dica = dica.replace("{", "");
-			dica = dica.replace(" }", "");
-			dica = dica.replace(" dica : ", "").trim();
-			
-			if("".equals(dica) || dica == null)
-			{
-				response.getWriter().print("{ \"message\" : \" erro: dica nao pode ser em branco \" } ");
+				getResponse().getWriter().print("{ \"message\" : \" erro: a palavra nao pode ser em branco \" } ");
 				return;
 			}
 
-			String senha = palavrasDicas[2].toString().replace("\"", "");
-			senha = senha.replace("{", "");
-			senha = senha.replace(" }", "");
-			senha = senha.replace(" senha : ", "").trim();
+			String dica = getStringFromJasonObj(palavrasDicas[1], "dica");
 
-			if (!"positivo".equals(senha)) {
-				response.getWriter().print("{ \"message\" : \" erro: senha invalida \" } ");
+			if ("".equals(dica) || dica == null)
+			{
+				getResponse().getWriter().print("{ \"message\" : \" erro: dica nao pode ser em branco \" } ");
+				return;
+			}
+
+			String senha = getStringFromJasonObj(palavrasDicas[2], "senha");
+
+			if (!"positivo".equals(senha))
+			{
+				getResponse().getWriter().print("{ \"message\" : \" erro: senha invalida \" } ");
 				return;
 			}
 
@@ -73,15 +74,16 @@ public class CadastrarPalavra extends HttpServlet {
 			arquivo.flush();
 			arquivo.close();
 
-		} catch (IOException erro) {
-	    	response.getWriter().print("{ \"message\" : \" erro: "+ erro.getMessage() +"\" } ");
-	    	return;
+			getResponse().getWriter().print("{ \"message\" : \" Ok. Palavra Cadastrada com sucesso. \" } ");
+		} catch (IOException erro)
+		{
+			throw new ForcaException(erro.getMessage(), CadastrarPalavra.class);
+		} catch (Exception e)
+		{
+			throw new ForcaException(e.getMessage(), CadastrarPalavra.class);
 
-		} catch (Exception e) {
-			response.getWriter().print("{ \"message\" : \" erro: "+ e.getMessage() +"\" } ");
-			return;
 		}
-		response.getWriter().print("{ \"message\" : \" Ok. Palavra Cadastrada com sucesso. \" } ");
+
 	}
 
 }

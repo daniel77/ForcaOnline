@@ -8,3 +8,8 @@ body {
 	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
 	font-size: 79.5%;
 }
+@media handheld {
+  .navigation {
+    display: none;
+  }
+}
