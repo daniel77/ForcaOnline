@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import br.edu.up.business.PalavraForca;
+import br.edu.up.business.PalavraForcaImpl;
+import br.edu.up.business.bo.Palavra;
 import br.edu.up.controller.base.BaseControllerServelet;
 import br.edu.up.util.ForcaException;
 
@@ -66,14 +69,23 @@ public class CadastrarPalavra extends BaseControllerServelet
 			}
 
 			valores = palavra + "!" + dica;
-
-			File f = new File(getServletContext().getRealPath("/WEB-INF/palavras.txt"));
+			
+			Palavra p = new Palavra();
+			p.setDica(dica);
+			p.setPalavra(palavra);
+			
+			PalavraForca pal = new PalavraForcaImpl();
+			
+			pal.cadastrarPalavra(p);
+			
+			/* File f = new File(getServletContext().getRealPath("/WEB-INF/palavras.txt"));
 			arquivo = new BufferedWriter(new FileWriter(f, true));
 			arquivo.write(valores);
 			arquivo.newLine();
 			arquivo.flush();
 			arquivo.close();
-
+			*/
+			
 			getResponse().getWriter().print("{ \"message\" : \" Ok. Palavra Cadastrada com sucesso. \" } ");
 		} catch (IOException erro)
 		{

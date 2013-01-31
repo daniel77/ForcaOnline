@@ -8,8 +8,14 @@ public interface Forca {
 	
 	/**
 	 * Sorteia uma palavra.
+	 */
+	void sortearpalavra();
+	
+	/**
+	 * Sorteia uma palavra.
 	 * @param file
 	 */
+	@Deprecated
 	void sortearpalavra(String file);
 	
 	/**

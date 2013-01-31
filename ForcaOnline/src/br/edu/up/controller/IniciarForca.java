@@ -24,7 +24,8 @@ public class IniciarForca extends BaseControllerServelet
 		try
 		{
 			jogo = new ForcaImpl();
-			jogo.sortearpalavra(getServletContext().getRealPath("/WEB-INF/palavras.txt"));
+			//jogo.sortearpalavra(getServletContext().getRealPath("/WEB-INF/palavras.txt"));
+			jogo.sortearpalavra();
 			String dica = jogo.getDica();
 			getRequest().getSession().setAttribute("forca", jogo);
 

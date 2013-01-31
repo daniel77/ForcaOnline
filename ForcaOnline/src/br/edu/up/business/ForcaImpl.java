@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.up.business.bo.Palavra;
 
 /**
  * 
@@ -14,9 +17,14 @@ import java.util.ArrayList;
 public class ForcaImpl implements Serializable, Forca {
 
 	private static final long serialVersionUID = 7653430318396138287L;
-	private ArrayList<String> dicionarioPalavras = new ArrayList<String>();
-	private ArrayList<String> dicasPalavras = new ArrayList<String>();
-	private ArrayList<String> tentativas = new ArrayList<String>();
+	
+	private List<String> dicionarioPalavras = new ArrayList<String>();
+	private List<String> dicasPalavras = new ArrayList<String>();
+	private List<String> tentativas = new ArrayList<String>();
+	
+	private List<Palavra> dicionarioPalavrasSQL = new ArrayList<Palavra>();
+	
+	
 	private String palavraSorteada = "";
 	private int CodPalavraSorteada;
 
@@ -26,6 +34,29 @@ public class ForcaImpl implements Serializable, Forca {
 	int MAXTENTATIVAS = 6;
 	int numTentativas = 0;
 
+	public void sortearpalavra() {
+		try {
+			
+
+			
+			dicionarioPalavrasSQL = new PalavraForcaImpl().listar();
+					
+
+			int TotalPalavras = dicionarioPalavrasSQL.size();
+			
+			CodPalavraSorteada = (int) (Math.random() * (TotalPalavras));
+			palavraSorteada = ((Palavra) dicionarioPalavrasSQL
+					.get(CodPalavraSorteada)).getPalavra();
+			
+			palavraSorteada = palavraSorteada.toUpperCase();
+
+		} catch (Exception ex) {
+			System.out.println("Erro: " + ex.toString());
+		}
+		;
+	}
+	
+	@Deprecated
 	public void sortearpalavra(String file) {
 		try {
 			File Arquivo = new File(file);
@@ -56,7 +87,7 @@ public class ForcaImpl implements Serializable, Forca {
 	}
 
 	public String getDica() {
-		return (String) dicasPalavras.get(CodPalavraSorteada);
+		return ((Palavra) dicionarioPalavrasSQL.get(CodPalavraSorteada)).getDica();
 	}
 
 	public String tentarletra(String letra) {
@@ -127,7 +158,8 @@ public class ForcaImpl implements Serializable, Forca {
 		return tempTexto;
 	}
 
-	public ArrayList<String> getDicionarioPalavras() {
+	@Deprecated
+	public List<String> getDicionarioPalavras() {
 		return dicionarioPalavras;
 	}
 
@@ -135,15 +167,11 @@ public class ForcaImpl implements Serializable, Forca {
 		this.dicionarioPalavras = dicionarioPalavras;
 	}
 
-	public ArrayList<String> getDicasPalavras() {
-		return dicasPalavras;
-	}
-
 	public void setDicasPalavras(ArrayList<String> dicasPalavras) {
 		this.dicasPalavras = dicasPalavras;
 	}
 
-	public ArrayList<String> getTentativas() {
+	public List<String> getTentativas() {
 		return tentativas;
 	}
 
